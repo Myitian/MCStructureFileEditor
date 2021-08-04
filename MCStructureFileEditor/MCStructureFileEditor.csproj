@@ -4,8 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Myitian</Authors>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
+    <Description>操作Minecraft结构NBT文件</Description>
+    <PackageProjectUrl>https://github.com/Myitian/MCStructureFileEditor</PackageProjectUrl>
+    <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
