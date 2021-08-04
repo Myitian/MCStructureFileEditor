@@ -12,7 +12,7 @@
     }
 
     /// <summary>超出尺寸范围时的处理方式（仅适用于X/Y/Z大于尺寸范围）</summary>
-    public enum SetBlockOutOfSizeHandle : byte
+    public enum SetBlockOutOfSizeProcessingMethod : byte
     {
         /// <summary>修改尺寸</summary>
         Resize,
@@ -25,11 +25,20 @@
     }
 
     /// <summary>SetPalette超出List范围时的处理方式</summary>
-    public enum SetPaletteOutOfSizeHandle : byte
+    public enum SetPaletteOutOfSizeProcessingMethod : byte
     {
         /// <summary>扩大调色板</summary>
         Expand,
         /// <summary>SetPalette失败</summary>
         Failed
+    }
+
+    /// <summary>方块不存在时的处理方式</summary>
+    public enum BlockNotFoundProcessingMethod : byte
+    {
+        /// <summary>失败</summary>
+        Failed,
+        /// <summary>异常</summary>
+        Exception
     }
 }

@@ -472,27 +472,27 @@ namespace MCStructureFileEditor
         /// <param name="pos">坐标 (x, y, z)</param>
         /// <param name="blockName">方块名</param>
         /// <param name="method">原方块处理方式</param>
-        /// <param name="outOfSizeProcess">超出尺寸范围时的处理方式（仅适用于X/Y/Z大于尺寸范围）</param>
+        /// <param name="outOfSizeProcessingMethod">超出尺寸范围时的处理方式（仅适用于X/Y/Z大于尺寸范围）</param>
         /// <param name="blockStateProperties">方块状态属性</param>
         /// <param name="blockEntity_nbt">方块实体NBT</param>
         /// <returns>操作成功则返回true，否则返回false</returns>
         public bool SetBlock((int, int, int) pos, string blockName, SetBlockMethod method = SetBlockMethod.replace,
-                            SetBlockOutOfSizeHandle outOfSizeProcess = SetBlockOutOfSizeHandle.Resize,
+                            SetBlockOutOfSizeProcessingMethod outOfSizeProcessingMethod = SetBlockOutOfSizeProcessingMethod.Resize,
                             Dictionary<string, string> blockStateProperties = null, NbtCompound blockEntity_nbt = null)
         {
-            switch (outOfSizeProcess)
+            switch (outOfSizeProcessingMethod)
             {
-                case SetBlockOutOfSizeHandle.Resize:
+                case SetBlockOutOfSizeProcessingMethod.Resize:
                     if (pos.Item1 >= size.Item1) size.Item1 = pos.Item1 + 1;
                     if (pos.Item2 >= size.Item2) size.Item2 = pos.Item2 + 1;
                     if (pos.Item3 >= size.Item3) size.Item3 = pos.Item3 + 1;
                     break;
-                case SetBlockOutOfSizeHandle.Failed:
+                case SetBlockOutOfSizeProcessingMethod.Failed:
                     if (pos.Item1 >= size.Item1 || pos.Item1 < 0) return false;
                     if (pos.Item2 >= size.Item2 || pos.Item2 < 0) return false;
                     if (pos.Item3 >= size.Item3 || pos.Item3 < 0) return false;
                     break;
-                case SetBlockOutOfSizeHandle.Exception:
+                case SetBlockOutOfSizeProcessingMethod.Exception:
                     if (pos.Item1 >= size.Item1 || pos.Item1 < 0) throw new ArgumentOutOfRangeException("X坐标超出尺寸范围");
                     if (pos.Item2 >= size.Item2 || pos.Item2 < 0) throw new ArgumentOutOfRangeException("Y坐标超出尺寸范围");
                     if (pos.Item3 >= size.Item3 || pos.Item3 < 0) throw new ArgumentOutOfRangeException("Z坐标超出尺寸范围");
@@ -654,25 +654,25 @@ namespace MCStructureFileEditor
         /// <param name="pos">坐标 (x, y, z)</param>
         /// <param name="state">调色板中方块的索引</param>
         /// <param name="method">原方块处理方式</param>
-        /// <param name="outOfSizeProcess">超出尺寸范围时的处理方式（仅适用于X/Y/Z大于尺寸范围）</param>
+        /// <param name="outOfSizeProcessingMethod">超出尺寸范围时的处理方式（仅适用于X/Y/Z大于尺寸范围）</param>
         /// <param name="blockEntity_nbt">方块实体NBT</param>
         /// <returns>操作成功则返回true，否则返回false</returns>
         public bool SetBlock((int, int, int) pos, int state, SetBlockMethod method = SetBlockMethod.replace,
-                             SetBlockOutOfSizeHandle outOfSizeProcess = SetBlockOutOfSizeHandle.Resize, NbtCompound blockEntity_nbt = null)
+                             SetBlockOutOfSizeProcessingMethod outOfSizeProcessingMethod = SetBlockOutOfSizeProcessingMethod.Resize, NbtCompound blockEntity_nbt = null)
         {
-            switch (outOfSizeProcess)
+            switch (outOfSizeProcessingMethod)
             {
-                case SetBlockOutOfSizeHandle.Resize:
+                case SetBlockOutOfSizeProcessingMethod.Resize:
                     if (pos.Item1 >= size.Item1) size.Item1 = pos.Item1 + 1;
                     if (pos.Item2 >= size.Item2) size.Item2 = pos.Item2 + 1;
                     if (pos.Item3 >= size.Item3) size.Item3 = pos.Item3 + 1;
                     break;
-                case SetBlockOutOfSizeHandle.Failed:
+                case SetBlockOutOfSizeProcessingMethod.Failed:
                     if (pos.Item1 >= size.Item1 || pos.Item1 < 0) return false;
                     if (pos.Item2 >= size.Item2 || pos.Item2 < 0) return false;
                     if (pos.Item3 >= size.Item3 || pos.Item3 < 0) return false;
                     break;
-                case SetBlockOutOfSizeHandle.Exception:
+                case SetBlockOutOfSizeProcessingMethod.Exception:
                     if (pos.Item1 >= size.Item1 || pos.Item1 < 0) throw new ArgumentOutOfRangeException("X坐标超出尺寸范围");
                     if (pos.Item2 >= size.Item2 || pos.Item2 < 0) throw new ArgumentOutOfRangeException("Y坐标超出尺寸范围");
                     if (pos.Item3 >= size.Item3 || pos.Item3 < 0) throw new ArgumentOutOfRangeException("Z坐标超出尺寸范围");
@@ -739,7 +739,22 @@ namespace MCStructureFileEditor
         #endregion StructureNBT-SetBlock
 
         #region StructureNBT-RemoveBlock
-
+        /// <summary>
+        /// 将一个方块更改为另一个方块。
+        /// </summary>
+        /// <param name="pos">坐标 (x, y, z)</param>
+        /// <param name="blockNotFoundProcessingMethod">方块不存在时的处理方式</param>
+        /// <returns>操作成功则返回true，否则返回false</returns>
+        public bool RemoveBlock((int, int, int) pos, BlockNotFoundProcessingMethod blockNotFoundProcessingMethod  = BlockNotFoundProcessingMethod.Exception)
+        {
+            switch (blockNotFoundProcessingMethod)
+            {
+                case BlockNotFoundProcessingMethod.Exception:
+                    if (!blocks.TryGetValue(pos, out _)) throw new KeyNotFoundException("方块未找到");
+                    break;
+            }
+            return blocks.Remove(pos);
+        }
         #endregion StructureNBT-RemoveBlock
 
         #region StructureNBT-PaletteSetting
@@ -775,7 +790,7 @@ namespace MCStructureFileEditor
         /// <param name="newPaletteItem">新调色板项</param>
         /// <param name="outOfSizeProcess">SetPalette超出List范围时的处理方式</param>
         /// <returns>操作成功则返回true</returns>
-        public bool SetPalette(int index, PaletteItem newPaletteItem, SetPaletteOutOfSizeHandle outOfSizeProcess = SetPaletteOutOfSizeHandle.Expand)
+        public bool SetPalette(int index, PaletteItem newPaletteItem, SetPaletteOutOfSizeProcessingMethod outOfSizeProcess = SetPaletteOutOfSizeProcessingMethod.Expand)
         {
             if (multiplePalette)
             {
@@ -783,7 +798,7 @@ namespace MCStructureFileEditor
                 {
                     if (index <= palettes[i].Count)
                         palettes[i][index] = newPaletteItem;
-                    else if (outOfSizeProcess == SetPaletteOutOfSizeHandle.Expand)
+                    else if (outOfSizeProcess == SetPaletteOutOfSizeProcessingMethod.Expand)
                     {
                         PaletteItem[] tmp_array = new PaletteItem[index + 1];
                         palettes[i].CopyTo(tmp_array);
@@ -797,7 +812,7 @@ namespace MCStructureFileEditor
             {
                 if (index <= palette.Count)
                     palette[index] = newPaletteItem;
-                else if (outOfSizeProcess == SetPaletteOutOfSizeHandle.Expand)
+                else if (outOfSizeProcess == SetPaletteOutOfSizeProcessingMethod.Expand)
                 {
                     PaletteItem[] tmp_array = new PaletteItem[index + 1];
                     palette.CopyTo(tmp_array);
@@ -815,12 +830,12 @@ namespace MCStructureFileEditor
         /// <param name="newPalette">新调色板</param>
         /// <param name="outOfSizeProcess">SetPalette超出List范围时的处理方式</param>
         /// <returns>操作成功则返回true</returns>
-        public bool SetPalette(int index, List<PaletteItem> newPalette, SetPaletteOutOfSizeHandle outOfSizeProcess = SetPaletteOutOfSizeHandle.Expand)
+        public bool SetPalette(int index, List<PaletteItem> newPalette, SetPaletteOutOfSizeProcessingMethod outOfSizeProcess = SetPaletteOutOfSizeProcessingMethod.Expand)
         {
             if (!multiplePalette) throw new NotSupportedException();
             if (index <= palettes.Count)
                 palettes[index] = newPalette;
-            else if (outOfSizeProcess == SetPaletteOutOfSizeHandle.Expand)
+            else if (outOfSizeProcess == SetPaletteOutOfSizeProcessingMethod.Expand)
             {
                 List<PaletteItem>[] tmp_array = new List<PaletteItem>[index + 1];
                 palettes.CopyTo(tmp_array);
@@ -838,19 +853,19 @@ namespace MCStructureFileEditor
         /// <param name="newPalette"></param>
         /// <param name="outOfSizeProcess"></param>
         /// <returns>操作成功则返回true</returns>
-        public bool SetPalette(int paletteIndex, int paletteItemIndex, PaletteItem newPalette, SetPaletteOutOfSizeHandle outOfSizeProcess = SetPaletteOutOfSizeHandle.Expand)
+        public bool SetPalette(int paletteIndex, int paletteItemIndex, PaletteItem newPalette, SetPaletteOutOfSizeProcessingMethod outOfSizeProcess = SetPaletteOutOfSizeProcessingMethod.Expand)
         {
             if (!multiplePalette) throw new NotSupportedException();
             if (paletteIndex > palettes.Count)
             {
-                if (outOfSizeProcess != SetPaletteOutOfSizeHandle.Expand) throw new IndexOutOfRangeException();
+                if (outOfSizeProcess != SetPaletteOutOfSizeProcessingMethod.Expand) throw new IndexOutOfRangeException();
                 List<PaletteItem>[] tmp_array = new List<PaletteItem>[paletteIndex + 1];
                 palettes.CopyTo(tmp_array);
                 palettes = tmp_array.ToList();
             }
             if (paletteItemIndex > palettes[paletteIndex].Count)
             {
-                if (outOfSizeProcess != SetPaletteOutOfSizeHandle.Expand) throw new IndexOutOfRangeException();
+                if (outOfSizeProcess != SetPaletteOutOfSizeProcessingMethod.Expand) throw new IndexOutOfRangeException();
                 PaletteItem[] tmp_array = new PaletteItem[paletteItemIndex + 1];
                 palettes[paletteItemIndex].CopyTo(tmp_array);
                 palettes[paletteItemIndex] = tmp_array.ToList();
