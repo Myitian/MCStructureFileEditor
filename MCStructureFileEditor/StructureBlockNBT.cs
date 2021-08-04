@@ -738,6 +738,10 @@ namespace MCStructureFileEditor
         }
         #endregion StructureNBT-SetBlock
 
+        #region StructureNBT-RemoveBlock
+
+        #endregion StructureNBT-RemoveBlock
+
         #region StructureNBT-PaletteSetting
         /// <summary>
         /// 设置调色板

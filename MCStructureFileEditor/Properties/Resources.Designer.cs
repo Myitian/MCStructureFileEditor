@@ -73,7 +73,7 @@ namespace MCStructureFileEditor.Properties {
         ///the terms and conditions of version 3 of the GNU General Public
         ///License, supplemented by the additional permissions listed below.
         ///
-        ///  0. Additional De [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///  0. A [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string LICENSE {
             get {
@@ -91,7 +91,7 @@ namespace MCStructureFileEditor.Properties {
         ///1. Redistributions of source code must retain the above copyright notice, this
         ///    list of conditions and the following disclaimer.
         ///2. Redistributions in binary form must reproduce the above copyright notice,
-        ///    this list of conditions and the following disclaimer in the docume [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    this list of conditions and the following disclaimer in t [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string LICENSE_fNbt {
             get {
@@ -111,7 +111,7 @@ namespace MCStructureFileEditor.Properties {
         ///Unless required by applicable law or agreed to in writing, software
         ///distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
         ///WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        ///See the License for the specific language governing p [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///See the License for the specific language  [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string LICENSE_JetBrains_Annotations {
             get {
