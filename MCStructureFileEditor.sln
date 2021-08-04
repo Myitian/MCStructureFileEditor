@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCStructureFileEditor", "MCStructureFileEditor\MCStructureFileEditor.csproj", "{342E1FDD-14AF-48F5-9E11-AE777F2DB5C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{342E1FDD-14AF-48F5-9E11-AE777F2DB5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{342E1FDD-14AF-48F5-9E11-AE777F2DB5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{342E1FDD-14AF-48F5-9E11-AE777F2DB5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{342E1FDD-14AF-48F5-9E11-AE777F2DB5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DE38E31-4A99-430B-ACD4-5AE943ED34EA}
+	EndGlobalSection
+EndGlobal
